@@ -1,0 +1,8 @@
+@openzeppelin/=node_modules/@openzeppelin/
+@se-2/=node_modules/@se-2/
+ds-test/=node_modules/@se-2/foundry/lib/solidity-bytes-utils/lib/forge-std/lib/ds-test/
+erc4626-tests/=lib/openzeppelin-contracts/lib/erc4626-tests/
+forge-std/=lib/openzeppelin-contracts/lib/forge-std/src/
+halmos-cheatcodes/=lib/openzeppelin-contracts/lib/halmos-cheatcodes/src/
+openzeppelin-contracts/=lib/openzeppelin-contracts/
+solidity-bytes-utils/=node_modules/@se-2/foundry/lib/solidity-bytes-utils/
