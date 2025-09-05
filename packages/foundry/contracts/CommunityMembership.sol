@@ -90,6 +90,10 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
             revert Error.EmptyCommunityImage();
         }
 
+        if (_tokenAddress == address(0)) {
+            revert Error.InvalidTokenAddress();
+        }
+
         name = _name;
         description = _description;
         communityImage = _communityImage;
@@ -304,7 +308,7 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
             task.isCompleted = true;
             task.fundsReleased = true;
             claimableRewards[task.assignee] += task.reward;
-            taskReservedFunds[taskId] = 0; // Clear reserved funds
+            taskReservedFunds[taskId] = 0;
 
             emit Event.TaskCompleted(taskId, task.reward);
         }
@@ -319,6 +323,10 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         token.safeTransfer(msg.sender, amount);
 
         emit Event.RewardClaimed(msg.sender, amount);
+    }
+
+    function getClaimableReward() external view returns (uint256) {
+        return claimableRewards[msg.sender];
     }
 
     function addLeader(address newLeader) external onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -384,16 +392,6 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         );
     }
 
-    function _increment() internal {
-        unchecked {
-            _idCounter++;
-        }
-    }
-
-    function _current() internal view returns (uint256) {
-        return _idCounter;
-    }
-
     function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
         _pause();
     }
@@ -407,5 +405,9 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         if (balance > 0) {
             token.safeTransfer(msg.sender, balance);
         }
+    }
+
+    function getCommunityBalance() external view returns (uint256) {
+        return communityBalance;
     }
 }

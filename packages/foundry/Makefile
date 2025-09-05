@@ -2,6 +2,20 @@
 
 DEPLOY_SCRIPT ?= script/Deploy.s.sol
 
+-include .env
+
+deployF:
+	forge script ../foundry/script/Deploy.s.sol:DeployScript\
+  --rpc-url ${RPC_URL} \
+  --broadcast \
+  --sig "deployMainDiamond()" \
+	--verify \
+	--etherscan-api-key ${ETHERSCAN_API_KEY} \
+	--verifier etherscan \
+	--verifier-url "https://api-sepolia.basescan.org/api" \
+	--account josh_base \
+	--sender 0xb9d5b499e3de63810e0d4883c1f0c84bc5f80660
+
 # setup wallet for anvil
 setup-anvil-wallet:
 	shx rm ~/.foundry/keystores/scaffold-eth-default 2>/dev/null; 	shx rm -rf broadcast/Deploy.s.sol/31337
