@@ -5,17 +5,16 @@ DEPLOY_SCRIPT ?= script/Deploy.s.sol
 -include .env
 
 deployF:
-	forge script ./script/Deploy.s.sol:DeployScript\
-  --rpc-url baseSepolia \
-  --broadcast \
-  --sig "run()" \
-	--verify \
-	--etherscan-api-key ${ETHERSCAN_API_KEY} \
-	--verifier etherscan \
-	--verifier-url "https://api-sepolia.basescan.org/api" \
-	--account josh_base \
-	--sender 0xb9d5b499e3de63810e0d4883c1f0c84bc5f80660
-
+		forge script --chain base-sepolia ./script/Deploy.s.sol:DeployScript \
+    --rpc-url baseSepolia \
+    --broadcast \
+		--resume \
+    --verify \
+    --verifier-url https://api-sepolia.basescan.org/api \
+    --etherscan-api-key ${ETHERSCAN_API_KEYZ} \
+    --account testnet \
+    -vvvv
+		
 # setup wallet for anvil
 setup-anvil-wallet:
 	shx rm ~/.foundry/keystores/scaffold-eth-default 2>/dev/null; 	shx rm -rf broadcast/Deploy.s.sol/31337

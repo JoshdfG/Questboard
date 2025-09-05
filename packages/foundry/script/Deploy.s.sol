@@ -3,13 +3,9 @@ pragma solidity ^0.8.19;
 
 import "./DeployHelpers.s.sol";
 import "../contracts/CommunityFactory.sol";
-import "../contracts/CommunityMembership.sol";
-import "../contracts/Community_NFT.sol";
 import "../libraries/Error.sol";
 import "../libraries/Event.sol";
-import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "../libraries/Event.sol";
-import "../contracts/CommunityFactory.sol";
+import "../lib/forge-std/src/Script.sol";
 
 /**
  * @notice Main deployment script for all contracts
@@ -17,13 +13,14 @@ import "../contracts/CommunityFactory.sol";
  *
  * Example: yarn deploy # runs this script(without`--file` flag)
  */
-contract DeployScript is ScaffoldETHDeploy {
+contract DeployScript is Script {
     Community public community;
-    CommunityMembershipNFT public membershipNFT;
     CommunityFactory public factory;
 
     address[] public admins;
-    address admin1 = address(0xA11CE);
+    uint256 deployerPrivateKey = vm.envUint("PRIVATE_KEY");
+    address deployer = vm.addr(deployerPrivateKey);
+    address admin1 = deployer;
     address admin2 = address(0xBEEF);
     address admin3 = address(0xCAFE);
 
@@ -32,11 +29,18 @@ contract DeployScript is ScaffoldETHDeploy {
         admins.push(admin2);
         admins.push(admin3);
 
+        vm.startBroadcast(deployerPrivateKey);
+
         address usdc_token = 0x036CbD53842c5426634e7929541eC2318f3dCF7e;
         factory = new CommunityFactory();
-        factory.createCommunity("DevDAO", "A dev community", "ipfs://communityImage", admins, usdc_token);
+
+        (address communityAddr, uint256 communityId) =
+            factory.createCommunity("DevDAO", "A dev community", "ipfs://communityImage", admins, usdc_token);
+
+        vm.stopBroadcast();
 
         writeAddressesToFile(address(factory), "Factory");
+        writeAddressesToFile(communityAddr, "Community");
     }
 
     function writeAddressesToFile(address addr, string memory text) public {

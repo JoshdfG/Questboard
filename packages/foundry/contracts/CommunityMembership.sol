@@ -392,14 +392,6 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         );
     }
 
-    function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
-        _pause();
-    }
-
-    function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
-        _unpause();
-    }
-
     function emergencyWithdraw() external onlyRole(DEFAULT_ADMIN_ROLE) {
         uint256 balance = token.balanceOf(address(this));
         if (balance > 0) {
