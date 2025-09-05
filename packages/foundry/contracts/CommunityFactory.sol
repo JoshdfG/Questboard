@@ -1,17 +1,24 @@
 //SPDX-License-Identifier: MIT
 pragma solidity >=0.8.0 <0.9.0;
 
+import "@openzeppelin/contracts/access/AccessControl.sol";
 import "../contracts/CommunityMembership.sol";
 import "../libraries/Event.sol";
 import "../libraries/Error.sol";
 
-contract CommunityFactory {
+contract CommunityFactory is AccessControl {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     uint256 private communityIdCounter;
 
     mapping(uint256 => address) public communities;
     mapping(address => uint256[]) public userCommunities;
     mapping(address => bool) public isCommunityContract;
+
+    constructor() {
+        _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
+        _grantRole(ADMIN_ROLE, msg.sender);
+        communityIdCounter = 1;
+    }
 
     function createCommunity(
         string memory _name,

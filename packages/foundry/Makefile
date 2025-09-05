@@ -5,16 +5,43 @@ DEPLOY_SCRIPT ?= script/Deploy.s.sol
 -include .env
 
 deployF:
+	forge script --chain base-sepolia ./script/Deploy.s.sol:DeployScript \
+  --rpc-url ${RPC_URL} \
+  --broadcast \
+  --verify \
+  --verifier-url "https://api-sepolia.basescan.org/api" \
+  --etherscan-api-key ${ETHERSCAN_API_KEYZ} \
+  --account myAccount \
+  --nonce <correct-nonce> \
+  -vvvv
+
+make d:
+	forge script ./script/Deploy.s.sol:DeployScript \
+  --rpc-url baseSepolia \
+  --broadcast \
+  --resume \
+  --account testnet \
+  --sender 0x84b5545e9bdc62a65bb2353a4cc112e3c6f3ae96
+v:
 		forge script --chain base-sepolia ./script/Deploy.s.sol:DeployScript \
-    --rpc-url baseSepolia \
-    --broadcast \
+		  --rpc-url baseSepolia \
+		  --broadcast \
 		--resume \
-    --verify \
-    --verifier-url https://api-sepolia.basescan.org/api \
-    --etherscan-api-key ${ETHERSCAN_API_KEYZ} \
-    --account testnet \
-    -vvvv
-		
+		  --verify \
+		  --verifier-url https://api-sepolia.basescan.org/api \
+		  --etherscan-api-key ${ETHERSCAN_API_KEYZ} \
+		  --account testnet \
+		  -vvvv
+dr:
+	forge script ./script/Deploy.s.sol:DeployScript \
+  --rpc-url baseSepolia \
+  --broadcast \
+  --verify \
+  --verifier-url https://api-sepolia.basescan.org/api \
+  --etherscan-api-key XCEICQTMHHWEQI5DQI7UWVUTPE8EPPDTVY \
+  --account testnet \
+  -vvvv
+
 # setup wallet for anvil
 setup-anvil-wallet:
 	shx rm ~/.foundry/keystores/scaffold-eth-default 2>/dev/null; 	shx rm -rf broadcast/Deploy.s.sol/31337
