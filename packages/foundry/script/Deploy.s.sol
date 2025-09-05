@@ -35,5 +35,16 @@ contract DeployScript is ScaffoldETHDeploy {
         address usdc_token = 0x036CbD53842c5426634e7929541eC2318f3dCF7e;
         factory = new CommunityFactory();
         factory.createCommunity("DevDAO", "A dev community", "ipfs://communityImage", admins, usdc_token);
+
+        writeAddressesToFile(address(factory), "Factory");
+    }
+
+    function writeAddressesToFile(address addr, string memory text) public {
+        string memory filename = "./deployed_contracts.txt";
+
+        vm.writeLine(filename, "-------------------------------------------------");
+        vm.writeLine(filename, text);
+        vm.writeLine(filename, vm.toString(addr));
+        vm.writeLine(filename, "-------------------------------------------------");
     }
 }
