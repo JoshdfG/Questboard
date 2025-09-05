@@ -32,6 +32,8 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         bool fundsReleased;
     }
 
+    Task[] allTasks;
+
     struct JoinRequest {
         address requester;
         bool approved;
@@ -213,10 +215,19 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         task.creator = msg.sender;
         task.isActive = true;
 
+        allTasks.push(task);
         taskReservedFunds[taskId] = _reward;
         communityBalance -= _reward;
 
         emit Event.TaskCreated(taskId, _description, _reward);
+    }
+
+    function getAllTasks() external view returns (Task[] memory) {
+        return allTasks;
+    }
+
+    function getTaskLength() external view returns (uint256) {
+        return allTasks.length;
     }
 
     function cancelTask(uint256 taskId) external onlyRole(DEFAULT_ADMIN_ROLE) whenNotPaused {

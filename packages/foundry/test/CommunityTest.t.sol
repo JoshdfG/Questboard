@@ -63,7 +63,6 @@ contract CommunityTest is Test {
         new Community("DevDAO", "desc", "", admins, address(token));
     }
 
-    // Example restored test
     function testRequestToJoin() public {
         vm.prank(member1);
         community.requestToJoin();
@@ -103,19 +102,32 @@ contract CommunityTest is Test {
         vm.prank(admin1);
         community.createTask("Do something", 100 ether);
 
+        uint256 tasklength = community.getTaskLength();
+        assertEq(tasklength, 1);
+
         (string memory desc, uint256 reward,,,,,,) = community.getTaskDetails(1);
         assertEq(desc, "Do something");
         assertEq(reward, 100 ether);
     }
 
+    function testGetTasklength() public {
+        testCreateTask();
+        uint256 tasklength = community.getTaskLength();
+        assertEq(tasklength, 1);
+    }
+
+    function testGetAllTask() public {
+        testCreateTask();
+        uint256 tasklength = community.getTaskLength();
+        assertEq(tasklength, 1);
+    }
+
     function testAssignTask() public {
-        // First, make member1 join
         vm.prank(member1);
         community.requestToJoin();
 
         uint256 requestId = community.memberJoinRequestId(member1);
 
-        // Fast-track approvals
         vm.prank(admin1);
         community.addLeader(admin2);
         vm.prank(admin1);
@@ -127,9 +139,11 @@ contract CommunityTest is Test {
         vm.prank(admin3);
         community.approveJoinRequest(requestId);
 
-        // Now member1 is a member
         vm.prank(admin1);
         community.createTask("Fix bug", 50 ether);
+
+        uint256 tasklength = community.getTaskLength();
+        assertEq(tasklength, 1);
 
         vm.prank(admin1);
         community.assignTask(2, member1);
@@ -139,24 +153,20 @@ contract CommunityTest is Test {
     }
 
     function testSubmitProofAndApproveTask() public {
-        // Create and assign task to admin1 (already a member)
         vm.prank(admin1);
         community.createTask("Write docs", 20 ether);
 
         vm.prank(admin1);
         community.assignTask(1, admin1);
 
-        // Submit proof
         vm.prank(admin1);
         community.submitProof(1, "ipfs://proof");
 
-        // Add more leaders
         vm.prank(admin1);
         community.addLeader(admin2);
         vm.prank(admin1);
         community.addLeader(admin3);
 
-        // Approve task
         vm.prank(admin1);
         community.approveTask(1);
         vm.prank(admin2);
@@ -164,7 +174,6 @@ contract CommunityTest is Test {
         vm.prank(admin3);
         community.approveTask(1);
 
-        // Check rewards
         uint256 claimable = community.claimableRewards(admin1);
         assertEq(claimable, 20 ether);
     }
@@ -191,13 +200,13 @@ contract CommunityTest is Test {
         vm.prank(admin1);
         community.claimReward();
 
-        assertEq(token.balanceOf(admin1), 510 ether); // 1000 - 500 (funded) + 10 (reward)
+        assertEq(token.balanceOf(admin1), 510 ether);
     }
 
     function testFundCommunity() public {
         vm.prank(admin1);
         community.fundCommunity(50 ether);
 
-        assertEq(community.communityBalance(), 550 ether); // 500 (initial) + 50 (new funding)
+        assertEq(community.communityBalance(), 550 ether);
     }
 }
