@@ -91,6 +91,13 @@
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "getAllCreatedCommunity",
+    "outputs": [{ "internalType": "address[]", "name": "", "type": "address[]" }],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [{ "internalType": "uint256", "name": "_communityId", "type": "uint256" }],
     "name": "getCommunity",
     "outputs": [{ "internalType": "address", "name": "", "type": "address" }],

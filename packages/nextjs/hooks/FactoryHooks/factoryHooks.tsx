@@ -138,3 +138,50 @@ export function useCreateCommunity() {
     error,
   };
 }
+
+/**
+ * Combined hook to get community details with address resolution
+ */
+export function useCommunityWithAddress(communityId: bigint) {
+  const { data: communityAddress, ...communityQuery } = useGetCommunity(communityId);
+  const { data: isValid, ...validityQuery } = useIsValidCommunity(communityAddress as Address);
+
+  return {
+    communityAddress,
+    isValid,
+    isLoading: communityQuery.isLoading || validityQuery.isLoading,
+    error: communityQuery.error || validityQuery.error,
+  };
+}
+
+/**
+ * Hook to get all communities with their addresses
+ */
+// export function useAllCommunities() {
+//   const { data: totalCommunities, ...totalQuery } = useGetTotalCommunities();
+
+//   const communityQueries = Array.from(
+//     { length: Number(totalCommunities || 0) },
+//     (_, index) => useCommunities( BigInt(index))
+//   );
+
+//   const communities = communityQueries.map(query => query.data).filter(Boolean);
+//   const isLoading = totalQuery.isLoading || communityQueries.some(query => query.isLoading);
+//   const error = totalQuery.error || communityQueries.find(query => query.error)?.error;
+
+//   return {
+//     communities,
+//     totalCommunities,
+//     isLoading,
+//     error,
+//   };
+// }
+
+export function useGetAllCreatedCommunity() {
+  return useReadContract({
+    address: process.env.NEXT_PUBLIC_FACTORY_COMMUNITY as Address,
+    abi: COMMUNITY_FACTORY_ABI,
+    functionName: "getAllCreatedCommunity",
+    chainId: 84532,
+  });
+}

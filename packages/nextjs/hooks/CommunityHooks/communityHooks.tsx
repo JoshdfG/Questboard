@@ -2,11 +2,7 @@ import { Address } from "viem";
 import { useReadContract, useWaitForTransactionReceipt, useWriteContract } from "wagmi";
 import COMMUNITY_ABI from "~~/constants/CommunityAbi.json";
 
-// Hook Configuration
-interface HookConfig {
-  contractAddress: Address;
-  chainId?: number;
-}
+// Hook uration
 
 // =============================================================================
 // READ HOOKS
@@ -22,27 +18,27 @@ export function useDefaultAdminRole(contractAddress: Address) {
   });
 }
 
-export function useLeaderRole(config: HookConfig) {
+export function useLeaderRole(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "LEADER_ROLE",
     chainId: 84532,
   });
 }
 
-export function useMemberRole(config: HookConfig) {
+export function useMemberRole(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "MEMBER_ROLE",
     chainId: 84532,
   });
 }
 
-export function useQuorumSize(config: HookConfig) {
+export function useQuorumSize(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "QUORUM_SIZE",
     chainId: 84532,
@@ -50,54 +46,54 @@ export function useQuorumSize(config: HookConfig) {
 }
 
 // Community Info
-export function useCommunityName(config: HookConfig) {
+export function useCommunityName(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "name",
     chainId: 84532,
   });
 }
 
-export function useCommunityDescription(config: HookConfig) {
+export function useCommunityDescription(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "description",
     chainId: 84532,
   });
 }
 
-export function useCommunityImage(config: HookConfig) {
+export function useCommunityImage(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "communityImage",
     chainId: 84532,
   });
 }
 
-export function useCommunityBalance(config: HookConfig) {
+export function useCommunityBalance(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "communityBalance",
     chainId: 84532,
   });
 }
 
-export function useGetCommunityBalance(config: HookConfig) {
+export function useGetCommunityBalance(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getCommunityBalance",
     chainId: 84532,
   });
 }
 
-export function usePaused(config: HookConfig) {
+export function usePaused(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "paused",
     chainId: 84532,
@@ -105,18 +101,18 @@ export function usePaused(config: HookConfig) {
 }
 
 // Token Info
-export function useToken(config: HookConfig) {
+export function useToken(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "token",
     chainId: 84532,
   });
 }
 
-export function useGetTokenAddress(config: HookConfig) {
+export function useGetTokenAddress(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getTokenAddress",
     chainId: 84532,
@@ -124,27 +120,27 @@ export function useGetTokenAddress(config: HookConfig) {
 }
 
 // Membership
-export function useMembershipNFT(config: HookConfig) {
+export function useMembershipNFT(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "membershipNFT",
     chainId: 84532,
   });
 }
 
-export function useGetMembershipNFT(config: HookConfig) {
+export function useGetMembershipNFT(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getMembershipNFT",
     chainId: 84532,
   });
 }
 
-export function useIsMember(config: HookConfig, userAddress: Address) {
+export function useIsMember(contractAddress: Address, userAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "isMember",
     args: [userAddress],
@@ -152,9 +148,9 @@ export function useIsMember(config: HookConfig, userAddress: Address) {
   });
 }
 
-export function useIsLeader(config: HookConfig, userAddress: Address) {
+export function useIsLeader(contractAddress: Address, userAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "isLeader",
     args: [userAddress],
@@ -163,18 +159,18 @@ export function useIsLeader(config: HookConfig, userAddress: Address) {
 }
 
 // Admins
-export function useGetAdmins(config: HookConfig) {
+export function useGetAdmins(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getAdmins",
     chainId: 84532,
   });
 }
 
-export function useAdmins(config: HookConfig, index: bigint) {
+export function useAdmins(contractAddress: Address, index: bigint) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "admins",
     args: [index],
@@ -183,9 +179,9 @@ export function useAdmins(config: HookConfig, index: bigint) {
 }
 
 // Role Management
-export function useHasRole(config: HookConfig, role: `0x${string}`, account: Address) {
+export function useHasRole(contractAddress: Address, role: `0x${string}`, account: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "hasRole",
     args: [role, account],
@@ -193,9 +189,9 @@ export function useHasRole(config: HookConfig, role: `0x${string}`, account: Add
   });
 }
 
-export function useGetRoleAdmin(config: HookConfig, role: `0x${string}`) {
+export function useGetRoleAdmin(contractAddress: Address, role: `0x${string}`) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getRoleAdmin",
     args: [role],
@@ -204,27 +200,27 @@ export function useGetRoleAdmin(config: HookConfig, role: `0x${string}`) {
 }
 
 // Tasks
-export function useGetAllTasks(config: HookConfig) {
+export function useGetAllTasks(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getAllTasks",
     chainId: 84532,
   });
 }
 
-export function useGetTaskLength(config: HookConfig) {
+export function useGetTaskLength(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getTaskLength",
     chainId: 84532,
   });
 }
 
-export function useTasks(config: HookConfig, taskId: bigint) {
+export function useTasks(contractAddress: Address, taskId: bigint) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "tasks",
     args: [taskId],
@@ -232,9 +228,9 @@ export function useTasks(config: HookConfig, taskId: bigint) {
   });
 }
 
-export function useGetTaskDetails(config: HookConfig, taskId: bigint) {
+export function useGetTaskDetails(contractAddress: Address, taskId: bigint) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getTaskDetails",
     args: [taskId],
@@ -242,9 +238,9 @@ export function useGetTaskDetails(config: HookConfig, taskId: bigint) {
   });
 }
 
-export function useTaskReservedFunds(config: HookConfig, taskId: bigint) {
+export function useTaskReservedFunds(contractAddress: Address, taskId: bigint) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "taskReservedFunds",
     args: [taskId],
@@ -252,9 +248,9 @@ export function useTaskReservedFunds(config: HookConfig, taskId: bigint) {
   });
 }
 
-export function useTaskApprovals(config: HookConfig, taskId: bigint, approver: Address) {
+export function useTaskApprovals(contractAddress: Address, taskId: bigint, approver: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "taskApprovals",
     args: [taskId, approver],
@@ -263,9 +259,9 @@ export function useTaskApprovals(config: HookConfig, taskId: bigint, approver: A
 }
 
 // Rewards
-export function useClaimableRewards(config: HookConfig, userAddress: Address) {
+export function useClaimableRewards(contractAddress: Address, userAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "claimableRewards",
     args: [userAddress],
@@ -273,9 +269,9 @@ export function useClaimableRewards(config: HookConfig, userAddress: Address) {
   });
 }
 
-export function useGetClaimableReward(config: HookConfig) {
+export function useGetClaimableReward(contractAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "getClaimableReward",
     chainId: 84532,
@@ -283,9 +279,9 @@ export function useGetClaimableReward(config: HookConfig) {
 }
 
 // Join Requests
-export function useJoinRequests(config: HookConfig, requestId: bigint) {
+export function useJoinRequests(contractAddress: Address, requestId: bigint) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "joinRequests",
     args: [requestId],
@@ -293,9 +289,9 @@ export function useJoinRequests(config: HookConfig, requestId: bigint) {
   });
 }
 
-export function useJoinRequestApprovals(config: HookConfig, requestId: bigint, approver: Address) {
+export function useJoinRequestApprovals(contractAddress: Address, requestId: bigint, approver: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "joinRequestApprovals",
     args: [requestId, approver],
@@ -303,9 +299,9 @@ export function useJoinRequestApprovals(config: HookConfig, requestId: bigint, a
   });
 }
 
-export function useMemberJoinRequestId(config: HookConfig, memberAddress: Address) {
+export function useMemberJoinRequestId(contractAddress: Address, memberAddress: Address) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "memberJoinRequestId",
     args: [memberAddress],
@@ -314,9 +310,9 @@ export function useMemberJoinRequestId(config: HookConfig, memberAddress: Addres
 }
 
 // Interface Support
-export function useSupportsInterface(config: HookConfig, interfaceId: `0x${string}`) {
+export function useSupportsInterface(contractAddress: Address, interfaceId: `0x${string}`) {
   return useReadContract({
-    address: config.contractAddress,
+    address: contractAddress,
     abi: COMMUNITY_ABI,
     functionName: "supportsInterface",
     args: [interfaceId],
@@ -329,12 +325,12 @@ export function useSupportsInterface(config: HookConfig, interfaceId: `0x${strin
 // =============================================================================
 
 // Admin Management
-export function useAddAdmin(config: HookConfig) {
+export function useAddAdmin(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const addAdmin = (newAdmin: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "addAdmin",
       args: [newAdmin],
@@ -356,12 +352,12 @@ export function useAddAdmin(config: HookConfig) {
   };
 }
 
-export function useRemoveAdmin(config: HookConfig) {
+export function useRemoveAdmin(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const removeAdmin = (admin: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "removeAdmin",
       args: [admin],
@@ -384,12 +380,12 @@ export function useRemoveAdmin(config: HookConfig) {
 }
 
 // Leader Management
-export function useAddLeader(config: HookConfig) {
+export function useAddLeader(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const addLeader = (newLeader: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "addLeader",
       args: [newLeader],
@@ -411,12 +407,12 @@ export function useAddLeader(config: HookConfig) {
   };
 }
 
-export function useRemoveLeader(config: HookConfig) {
+export function useRemoveLeader(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const removeLeader = (leader: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "removeLeader",
       args: [leader],
@@ -439,12 +435,12 @@ export function useRemoveLeader(config: HookConfig) {
 }
 
 // Role Management
-export function useGrantRole(config: HookConfig) {
+export function useGrantRole(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const grantRole = (role: `0x${string}`, account: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "grantRole",
       args: [role, account],
@@ -466,12 +462,12 @@ export function useGrantRole(config: HookConfig) {
   };
 }
 
-export function useRevokeRole(config: HookConfig) {
+export function useRevokeRole(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const revokeRole = (role: `0x${string}`, account: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "revokeRole",
       args: [role, account],
@@ -493,12 +489,12 @@ export function useRevokeRole(config: HookConfig) {
   };
 }
 
-export function useRenounceRole(config: HookConfig) {
+export function useRenounceRole(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const renounceRole = (role: `0x${string}`, callerConfirmation: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "renounceRole",
       args: [role, callerConfirmation],
@@ -521,12 +517,12 @@ export function useRenounceRole(config: HookConfig) {
 }
 
 // Membership
-export function useRequestToJoin(config: HookConfig) {
+export function useRequestToJoin(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const requestToJoin = () => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "requestToJoin",
       chainId: 84532,
@@ -547,12 +543,12 @@ export function useRequestToJoin(config: HookConfig) {
   };
 }
 
-export function useApproveJoinRequest(config: HookConfig) {
+export function useApproveJoinRequest(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const approveJoinRequest = (requestId: bigint) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "approveJoinRequest",
       args: [requestId],
@@ -575,12 +571,12 @@ export function useApproveJoinRequest(config: HookConfig) {
 }
 
 // Task Management
-export function useCreateTask(config: HookConfig) {
+export function useCreateTask(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const createTask = (description: string, reward: bigint) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "createTask",
       args: [description, reward],
@@ -602,12 +598,12 @@ export function useCreateTask(config: HookConfig) {
   };
 }
 
-export function useAssignTask(config: HookConfig) {
+export function useAssignTask(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const assignTask = (taskId: bigint, assignee: Address) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "assignTask",
       args: [taskId, assignee],
@@ -629,12 +625,12 @@ export function useAssignTask(config: HookConfig) {
   };
 }
 
-export function useCancelTask(config: HookConfig) {
+export function useCancelTask(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const cancelTask = (taskId: bigint) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "cancelTask",
       args: [taskId],
@@ -656,12 +652,12 @@ export function useCancelTask(config: HookConfig) {
   };
 }
 
-export function useSubmitProof(config: HookConfig) {
+export function useSubmitProof(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const submitProof = (taskId: bigint, proof: string) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "submitProof",
       args: [taskId, proof],
@@ -683,12 +679,12 @@ export function useSubmitProof(config: HookConfig) {
   };
 }
 
-export function useApproveTask(config: HookConfig) {
+export function useApproveTask(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const approveTask = (taskId: bigint) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "approveTask",
       args: [taskId],
@@ -711,12 +707,12 @@ export function useApproveTask(config: HookConfig) {
 }
 
 // Funding and Rewards
-export function useFundCommunity(config: HookConfig) {
+export function useFundCommunity(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const fundCommunity = (amount: bigint) => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "fundCommunity",
       args: [amount],
@@ -738,12 +734,12 @@ export function useFundCommunity(config: HookConfig) {
   };
 }
 
-export function useClaimReward(config: HookConfig) {
+export function useClaimReward(contractAddress: Address) {
   const { data: hash, isPending, writeContract, error } = useWriteContract();
 
   const claimReward = () => {
     writeContract({
-      address: config.contractAddress,
+      address: contractAddress,
       abi: COMMUNITY_ABI,
       functionName: "claimReward",
       chainId: 84532,
@@ -771,19 +767,19 @@ export function useClaimReward(config: HookConfig) {
 /**
  * Combined hook to get user's role information
  */
-export function useUserRoles(config: HookConfig, userAddress: Address) {
-  const { data: isMember, ...memberQuery } = useIsMember(config, userAddress);
-  const { data: isLeader, ...leaderQuery } = useIsLeader(config, userAddress);
+export function useUserRoles(contractAddress: Address, userAddress: Address) {
+  const { data: isMember, ...memberQuery } = useIsMember(contractAddress, userAddress);
+  const { data: isLeader, ...leaderQuery } = useIsLeader(contractAddress, userAddress);
 
   // Get role constants
-  const { data: memberRole } = useMemberRole(config);
-  const { data: leaderRole } = useLeaderRole(config);
-  // const { data: adminRole } = useDefaultAdminRole(config);
+  const { data: memberRole } = useMemberRole(contractAddress);
+  const { data: leaderRole } = useLeaderRole(contractAddress);
+  // const { data: adminRole } = useDefaultAdminRole();
 
   // Check specific roles
-  const { data: hasMemberRole } = useHasRole(config, memberRole as `0x${string}`, userAddress);
-  const { data: hasLeaderRole } = useHasRole(config, leaderRole as `0x${string}`, userAddress);
-  // const { data: hasAdminRole } = useHasRole(config, adminRole as `0x${string}`, userAddress);
+  const { data: hasMemberRole } = useHasRole(contractAddress, memberRole as `0x${string}`, userAddress);
+  const { data: hasLeaderRole } = useHasRole(contractAddress, leaderRole as `0x${string}`, userAddress);
+  // const { data: hasAdminRole } = useHasRole(adminRole as `0x${string}`, userAddress);
 
   return {
     isMember,
@@ -799,10 +795,10 @@ export function useUserRoles(config: HookConfig, userAddress: Address) {
 /**
  * Combined hook to get complete task information
  */
-export function useTaskComplete(config: HookConfig, taskId: bigint) {
-  const { data: task, ...taskQuery } = useTasks(config, taskId);
-  const { data: taskDetails, ...detailsQuery } = useGetTaskDetails(config, taskId);
-  const { data: reservedFunds, ...fundsQuery } = useTaskReservedFunds(config, taskId);
+export function useTaskComplete(contractAddress: Address, taskId: bigint) {
+  const { data: task, ...taskQuery } = useTasks(contractAddress, taskId);
+  const { data: taskDetails, ...detailsQuery } = useGetTaskDetails(contractAddress, taskId);
+  const { data: reservedFunds, ...fundsQuery } = useTaskReservedFunds(contractAddress, taskId);
 
   return {
     task,
@@ -816,9 +812,9 @@ export function useTaskComplete(config: HookConfig, taskId: bigint) {
 /**
  * Hook to get user's claimable rewards with current balance
  */
-export function useUserRewards(config: HookConfig, userAddress: Address) {
-  const { data: claimableRewards, ...claimableQuery } = useClaimableRewards(config, userAddress);
-  const { data: totalClaimable, ...totalQuery } = useGetClaimableReward(config);
+export function useUserRewards(contractAddress: Address, userAddress: Address) {
+  const { data: claimableRewards, ...claimableQuery } = useClaimableRewards(contractAddress, userAddress);
+  const { data: totalClaimable, ...totalQuery } = useGetClaimableReward(contractAddress);
 
   return {
     claimableRewards,
@@ -831,14 +827,14 @@ export function useUserRewards(config: HookConfig, userAddress: Address) {
 /**
  * Hook to get community overview information
  */
-export function useCommunityOverview(config: HookConfig) {
-  const { data: name, ...nameQuery } = useCommunityName(config);
-  const { data: description, ...descQuery } = useCommunityDescription(config);
-  const { data: image, ...imageQuery } = useCommunityImage(config);
-  const { data: balance, ...balanceQuery } = useCommunityBalance(config);
-  const { data: admins, ...adminsQuery } = useGetAdmins(config);
-  const { data: tasks, ...tasksQuery } = useGetAllTasks(config);
-  const { data: isPaused, ...pausedQuery } = usePaused(config);
+export function useCommunityOverview(contractAddress: Address) {
+  const { data: name, ...nameQuery } = useCommunityName(contractAddress);
+  const { data: description, ...descQuery } = useCommunityDescription(contractAddress);
+  const { data: image, ...imageQuery } = useCommunityImage(contractAddress);
+  const { data: balance, ...balanceQuery } = useCommunityBalance(contractAddress);
+  const { data: admins, ...adminsQuery } = useGetAdmins(contractAddress);
+  const { data: tasks, ...tasksQuery } = useGetAllTasks(contractAddress);
+  const { data: isPaused, ...pausedQuery } = usePaused(contractAddress);
 
   const isLoading = [nameQuery, descQuery, imageQuery, balanceQuery, adminsQuery, tasksQuery, pausedQuery].some(
     query => query.isLoading,
@@ -860,3 +856,43 @@ export function useCommunityOverview(config: HookConfig) {
     error,
   };
 }
+
+// export function useMultipleCommunityOverviews(addresses: Address[]) {
+//   const [, setResults] = useState<Array<{
+//     address: Address;
+//     name?: string;
+//     description?: string;
+//     image?: string;
+//     balance?: any;
+//     admins?: any;
+//     tasks?: any;
+//     isPaused?: boolean;
+//     isLoading: boolean;
+//     error?: any;
+//   }>>([]);
+
+//   useEffect(() => {
+//     const initialResults = addresses.map(address => ({
+//       address,
+//       isLoading: true,
+//       error: undefined
+//     }));
+//     setResults(initialResults);
+//   }, [addresses]);
+
+//   // Map over addresses and collect all the data
+//   const communityData = addresses.map(address => {
+//     const overview = useCommunityOverview(address);
+//     return {
+//       address,
+//       ...overview
+//     };
+//   });
+
+//   return {
+//     data: communityData,
+//     isLoading: communityData.some(item => item.isLoading),
+//     error: communityData.find(item => item.error)?.error,
+//     allLoaded: communityData.every(item => !item.isLoading && !item.error)
+//   };
+// }
