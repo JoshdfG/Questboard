@@ -32,6 +32,8 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         bool fundsReleased;
     }
 
+    Task[] allTasks;
+
     struct JoinRequest {
         address requester;
         bool approved;
@@ -86,6 +88,10 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
 
         if (bytes(_communityImage).length == 0) {
             revert Error.EmptyCommunityImage();
+        }
+
+        if (_tokenAddress == address(0)) {
+            revert Error.InvalidTokenAddress();
         }
 
         name = _name;
@@ -213,10 +219,19 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         task.creator = msg.sender;
         task.isActive = true;
 
+        allTasks.push(task);
         taskReservedFunds[taskId] = _reward;
         communityBalance -= _reward;
 
         emit Event.TaskCreated(taskId, _description, _reward);
+    }
+
+    function getAllTasks() external view returns (Task[] memory) {
+        return allTasks;
+    }
+
+    function getTaskLength() external view returns (uint256) {
+        return allTasks.length;
     }
 
     function cancelTask(uint256 taskId) external onlyRole(DEFAULT_ADMIN_ROLE) whenNotPaused {
@@ -293,7 +308,7 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
             task.isCompleted = true;
             task.fundsReleased = true;
             claimableRewards[task.assignee] += task.reward;
-            taskReservedFunds[taskId] = 0; // Clear reserved funds
+            taskReservedFunds[taskId] = 0;
 
             emit Event.TaskCompleted(taskId, task.reward);
         }
@@ -308,6 +323,10 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         token.safeTransfer(msg.sender, amount);
 
         emit Event.RewardClaimed(msg.sender, amount);
+    }
+
+    function getClaimableReward() external view returns (uint256) {
+        return claimableRewards[msg.sender];
     }
 
     function addLeader(address newLeader) external onlyRole(DEFAULT_ADMIN_ROLE) {
@@ -373,28 +392,14 @@ contract Community is AccessControl, ReentrancyGuard, Pausable {
         );
     }
 
-    function _increment() internal {
-        unchecked {
-            _idCounter++;
-        }
-    }
-
-    function _current() internal view returns (uint256) {
-        return _idCounter;
-    }
-
-    function pause() external onlyRole(DEFAULT_ADMIN_ROLE) {
-        _pause();
-    }
-
-    function unpause() external onlyRole(DEFAULT_ADMIN_ROLE) {
-        _unpause();
-    }
-
     function emergencyWithdraw() external onlyRole(DEFAULT_ADMIN_ROLE) {
         uint256 balance = token.balanceOf(address(this));
         if (balance > 0) {
             token.safeTransfer(msg.sender, balance);
         }
+    }
+
+    function getCommunityBalance() external view returns (uint256) {
+        return communityBalance;
     }
 }

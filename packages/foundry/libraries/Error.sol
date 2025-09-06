@@ -27,4 +27,5 @@ library Error {
     error NotEnoughAdmins();
     error EmptyName();
     error EmptyCommunityImage();
+    error InvalidTokenAddress();
 }

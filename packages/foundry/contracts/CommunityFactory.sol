@@ -4,13 +4,11 @@ pragma solidity >=0.8.0 <0.9.0;
 import "@openzeppelin/contracts/access/AccessControl.sol";
 import "../contracts/CommunityMembership.sol";
 import "../libraries/Event.sol";
+import "../libraries/Error.sol";
 
 contract CommunityFactory is AccessControl {
     bytes32 public constant ADMIN_ROLE = keccak256("ADMIN_ROLE");
     uint256 private communityIdCounter;
-
-    error EmptyName();
-    error EmptyCommunityImage();
 
     mapping(uint256 => address) public communities;
     mapping(address => uint256[]) public userCommunities;
@@ -30,11 +28,11 @@ contract CommunityFactory is AccessControl {
         address _token_address
     ) external returns (address communityAddress, uint256 communityId) {
         if (bytes(_name).length == 0) {
-            revert EmptyName();
+            revert Error.EmptyName();
         }
 
         if (bytes(_communityImage).length == 0) {
-            revert EmptyCommunityImage();
+            revert Error.EmptyCommunityImage();
         }
 
         if (_admins.length < 3) {
