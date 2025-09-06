@@ -1,24 +1,24 @@
-import "@rainbow-me/rainbowkit/styles.css";
-import { ScaffoldEthAppWithProviders } from "~~/components/ScaffoldEthAppWithProviders";
-import { ThemeProvider } from "~~/components/ThemeProvider";
-import "~~/styles/globals.css";
-import { getMetadata } from "~~/utils/scaffold-eth/getMetadata";
+import type React from "react";
+import "./globals.css";
+import type { Metadata } from "next";
+import AppContext from "~~/contexts/app-context";
 
-export const metadata = getMetadata({
-  title: "Scaffold-ETH 2 App",
-  description: "Built with 🏗 Scaffold-ETH 2",
-});
+export const metadata: Metadata = {
+  title: "QuestBoard - Community Empowerment Platform",
+  description: "Empowering African communities through blockchain technology and ENS integration",
+  generator: "v0.app",
+};
 
-const ScaffoldEthApp = ({ children }: { children: React.ReactNode }) => {
+export default function RootLayout({
+  children,
+}: Readonly<{
+  children: React.ReactNode;
+}>) {
   return (
-    <html suppressHydrationWarning className={``}>
-      <body>
-        <ThemeProvider enableSystem>
-          <ScaffoldEthAppWithProviders>{children}</ScaffoldEthAppWithProviders>
-        </ThemeProvider>
+    <html lang="en">
+      <body className="bg-orange-100">
+        <AppContext>{children}</AppContext>
       </body>
     </html>
   );
-};
-
-export default ScaffoldEthApp;
+}
