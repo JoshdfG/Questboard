@@ -13,6 +13,7 @@ contract CommunityFactory is AccessControl {
     mapping(uint256 => address) public communities;
     mapping(address => uint256[]) public userCommunities;
     mapping(address => bool) public isCommunityContract;
+    address[] Communities;
 
     constructor() {
         _grantRole(DEFAULT_ADMIN_ROLE, msg.sender);
@@ -44,6 +45,9 @@ contract CommunityFactory is AccessControl {
 
         Community newCommunity = new Community(_name, _description, _communityImage, _admins, _token_address);
 
+        address organisationAddress = address(newCommunity);
+        Communities.push(address(organisationAddress));
+
         communityAddress = address(newCommunity);
         communities[communityId] = communityAddress;
         userCommunities[msg.sender].push(communityId);
@@ -68,5 +72,9 @@ contract CommunityFactory is AccessControl {
 
     function isValidCommunity(address _community) external view returns (bool) {
         return isCommunityContract[_community];
+    }
+
+    function getAllCreatedCommunity() external view returns (address[] memory) {
+        return Communities;
     }
 }

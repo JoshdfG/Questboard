@@ -28,7 +28,7 @@ v:
 		  --broadcast \
 		--resume \
 		  --verify \
-		  --verifier-url https://api-sepolia.basescan.org/api \
+		  --verifier-url "https://api-sepolia.basescan.org/api" \
 		  --etherscan-api-key ${ETHERSCAN_API_KEYZ} \
 		  --account testnet \
 		  -vvvv
