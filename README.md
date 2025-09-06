@@ -1,80 +1,149 @@
-# 🏗 Scaffold-ETH 2
+# QuestBoard
 
-<h4 align="center">
-  <a href="https://docs.scaffoldeth.io">Documentation</a> |
-  <a href="https://scaffoldeth.io">Website</a>
-</h4>
+QuestBoard is a decentralized platform built on **Base (L2 Ethereum)** that empowers African creators — such as farmers, content creators, and artisans — to form public or private communities with shared **ENS names**, mint **QuestBoard NFTs** (free or paid) for membership, complete tasks for rewards from **ENS-named community purses**, and showcase their profiles and earnings.
 
-🧪 An open-source, up-to-date toolkit for building decentralized applications (dapps) on the Ethereum blockchain. It's designed to make it easier for developers to create and deploy smart contracts and build user interfaces that interact with those contracts.
+The name **QuestBoard** reflects a vibrant, task-driven hub where creators embark on *quests* (tasks) to earn rewards, fostering financial inclusion, trust, and community coordination.
 
-⚙️ Built using NextJS, RainbowKit, Foundry, Wagmi, Viem, and Typescript.
+---
 
-- ✅ **Contract Hot Reload**: Your frontend auto-adapts to your smart contract as you edit it.
-- 🪝 **[Custom hooks](https://docs.scaffoldeth.io/hooks/)**: Collection of React hooks wrapper around [wagmi](https://wagmi.sh/) to simplify interactions with smart contracts with typescript autocompletion.
-- 🧱 [**Components**](https://docs.scaffoldeth.io/components/): Collection of common web3 components to quickly build your frontend.
-- 🔥 **Burner Wallet & Local Faucet**: Quickly test your application with a burner wallet and local faucet.
-- 🔐 **Integration with Wallet Providers**: Connect to different wallet providers and interact with the Ethereum network.
+## 📖 Table of Contents
+- [Project Overview](#project-overview)
+- [Unique Selling Proposition](#unique-selling-proposition)
+- [Hackathon Alignment](#hackathon-alignment)
+- [Features](#features)
+- [Use Cases](#use-cases)
+- [Tech Stack](#tech-stack)
+- [Installation and Setup](#installation-and-setup)
+- [Smart Contracts](#smart-contracts)
+- [Running the Project](#running-the-project)
+- [Testing](#testing)
+- [Demo](#demo)
+- [Submission Details](#submission-details)
+- [Future Enhancements](#future-enhancements)
+- [License](#license)
+- [Contact](#contact)
 
-![Debug Contracts tab](https://github.com/scaffold-eth/scaffold-eth-2/assets/55535804/b237af0c-5027-4849-a5c1-2e31495cccb1)
+---
 
-## Requirements
+## 🚀 Project Overview
+QuestBoard enables African creators to build communities (e.g., `accracreators.eth`) where members mint NFTs to join, undertake tasks (e.g., deliver crops, post content), and earn rewards from community-managed purses.  
 
-Before you begin, you need to install the following tools:
+It leverages:
+- **ENS** for human-readable identities,  
+- **Base** for low-cost transactions,  
+- **NFTs** for verified access,  
 
-- [Node (>= v20.18.3)](https://nodejs.org/en/download/)
-- Yarn ([v1](https://classic.yarnpkg.com/en/docs/install/) or [v2+](https://yarnpkg.com/getting-started/install))
-- [Git](https://git-scm.com/downloads)
+to create a culturally resonant platform tailored for African creators and global supporters.
 
-## Quickstart
+---
 
-To get started with Scaffold-ETH 2, follow the steps below:
+## 🌟 Unique Selling Proposition
+**Empowering African Creators with Task-Driven Communities and Onchain Rewards.**
 
-1. Install dependencies if it was skipped in CLI:
+QuestBoard combines ENS for unified community identities, NFTs for verified membership, and task-based rewards from multi-sig purses. This creates a mobile-first, African-inspired ecosystem that eliminates intermediaries and fosters trust and creativity.
 
-```
-cd my-dapp-example
-yarn install
-```
+---
 
-2. Run a local network in the first terminal:
+## 🎯 Hackathon Alignment
+- **ENS Everywhere**  
+  - ENS for community names (e.g., `accracreators.eth`),  
+  - ENS subnames (e.g., `kofi.accracreators.eth`),  
+  - ENS text records for profiles (e.g., `role: farmer`),  
+  - ENS-named multi-sig purses.
 
-```
-yarn chain
-```
+- **Base Bounty**  
+  - Addresses African challenges like high remittance fees and lack of trust,  
+  - Uses Base’s low-cost transactions,  
+  - Leverages **Base Account** for onboarding,  
+  - Integrates **Base Pay** for fiat-to-crypto access.
 
-This command starts a local Ethereum network using Foundry. The network runs on your local machine and can be used for testing and development. You can customize the network configuration in `packages/foundry/foundry.toml`.
+---
 
-3. On a second terminal, deploy the test contract:
+## ⚙️ Features
+- **Wallet Onboarding**  
+  - Connect/create Base smart wallet via Base Account SDK.  
+  - Register ENS subname (e.g., `kofi.accracreators.eth`).  
 
-```
-yarn deploy
-```
+- **Community Creation**  
+  - Create public/private communities with ENS names and NFT membership (free/paid).  
+  - Deploy multi-sig purse (e.g., `accracreators.eth`) for rewards.  
 
-This command deploys a test smart contract to the local network. The contract is located in `packages/foundry/contracts` and can be modified to suit your needs. The `yarn deploy` command uses the deploy script located in `packages/foundry/script` to deploy the contract to the network. You can also customize the deploy script.
+- **QuestBoard NFT**  
+  - ERC-721 NFT minting for verified membership.  
+  - Admin verification using ENS text records (e.g., `verified: true`).  
 
-4. On a third terminal, start your NextJS app:
+- **Task System**  
+  - Admins create tasks with rewards (ETH/USDC).  
+  - Creators submit proof (via ENS text records).  
+  - Admins approve → multi-sig purse releases rewards.  
 
-```
-yarn start
-```
+- **Community Purse**  
+  - ENS-named **multi-sig wallet (2-of-3)** for deposits and payouts.  
+  - Supports ETH/USDC.  
+  - Fiat access via Base Pay.  
 
-Visit your app on: `http://localhost:3000`. You can interact with your smart contract using the `Debug Contracts` page. You can tweak the app config in `packages/nextjs/scaffold.config.ts`.
+- **Creator Profile**  
+  - ENS name + text records for role, earnings, and history.  
+  - NFT + completed tasks displayed.  
 
-Run smart contract test with `yarn foundry:test`
+- **Tipping**  
+  - Send tips to creators or purses (NFT-gated).  
 
-- Edit your smart contracts in `packages/foundry/contracts`
-- Edit your frontend homepage at `packages/nextjs/app/page.tsx`. For guidance on [routing](https://nextjs.org/docs/app/building-your-application/routing/defining-routes) and configuring [pages/layouts](https://nextjs.org/docs/app/building-your-application/routing/pages-and-layouts) checkout the Next.js documentation.
-- Edit your deployment scripts in `packages/foundry/script`
+- **Dashboard**  
+  - Manage communities, tasks, purse transactions, NFTs, and profiles.  
 
+---
 
-## Documentation
+## 🌍 Use Cases
+- **Ghanaian Cocoa Farmers**  
+  - Community: `accrafarmers.eth` (public, free NFT).  
+  - Task: Deliver 10kg cocoa, submit proof.  
+  - Reward: 0.01 ETH.  
 
-Visit our [docs](https://docs.scaffoldeth.io) to learn how to start building with Scaffold-ETH 2.
+- **Nigerian Content Creators**  
+  - Community: `lagoscreators.eth` (private, 0.01 ETH NFT).  
+  - Task: Upload YouTube video.  
+  - Reward: $5 USDC tipped by fans.  
 
-To know more about its features, check out our [website](https://scaffoldeth.io).
+- **Kenyan Artisans**  
+  - Community: `nairobiartisans.eth` (public, free NFT).  
+  - Task: Submit beadwork.  
+  - Reward: 0.005 ETH.  
 
-## Contributing to Scaffold-ETH 2
+---
 
-We welcome contributions to Scaffold-ETH 2!
+## 🛠️ Tech Stack
+- **Blockchain:** Base (Sepolia for testing, Mainnet for deployment)  
+- **Smart Contracts:**
+- **Frontend:** Next.js (React), deployed on Vercel  
+- **Libraries:**  
+  - ENS.js → ENS integration  
+  - Onchainkit → Base UI components  
+  - viem / ethers.js → Contract interaction  
+  - Base Account SDK → Wallet onboarding  
+  - Base Pay SDK → Fiat-to-crypto  
+  - Gnosis Safe SDK → Multi-sig purse  
+  - OpenZeppelin → ERC-721 templates  
+- **Testing:** Hardhat, Remix  
+- **Storage:** ENS records (onchain), IPFS for optional NFT metadata  
 
-Please see [CONTRIBUTING.MD](https://github.com/scaffold-eth/scaffold-eth-2/blob/main/CONTRIBUTING.md) for more information and guidelines for contributing to Scaffold-ETH 2.
+---
+
+## ⚡ Installation and Setup
+### Prerequisites
+- Node.js v16+  
+- MetaMask with Base Sepolia configured  
+- Base Sepolia ETH (via [Base Faucet](https://www.base.org/faucet))  
+- Git  
+
+### Steps
+```bash
+# Clone repo
+git clone https://github.com/JoshdfG/Questboard
+cd questboard
+
+# Install dependencies
+npm install
+
+# Start frontend
+npm run dev
